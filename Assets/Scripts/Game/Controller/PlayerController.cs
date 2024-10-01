@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerController : CharacterController
 {
-    private Animator animator;
     private Vector2 input;
+    private float speed = 3.5f;
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        playerRb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -18,7 +20,18 @@ public class PlayerController : CharacterController
         input.x = Input.GetAxis("Horizontal");
         input.y = Input.GetAxis("Vertical");
 
-        animator.SetFloat("InputX", input.x);
-        animator.SetFloat("InputY", input.y);
+        Move(input);
+
+        if (Input.GetKey(KeyCode.Space) && !animator.GetBool("Jump")) {
+            Jump();
+        } else if (animator.GetBool("Jump")) {
+            transform.Translate(new Vector3(input.x, 0, input.y) * speed * Time.deltaTime);
+        }
+    }
+
+    protected override void Jump() {
+        playerRb.AddForce(Vector3.up * 500, ForceMode.Impulse);
+        animator.SetBool("Jump", true);
+        transform.Translate(new Vector3(input.x, 0, input.y) * speed * Time.deltaTime);
     }
 }
