@@ -4,44 +4,21 @@ using UnityEngine;
 
 public class PlayerController : CharacterController
 {
-    public Transform playerBody;
-
-    private float mouseSensitivity = 800f;
-    private float yRotation = 0f;
-    private Rigidbody rbPlayer;
-    private float jumpForce = 5f;
-
+    private Animator animator;
+    private Vector2 input;
     // Start is called before the first frame update
     void Start()
     {
-        speed = 15;
-        Cursor.lockState = CursorLockMode.Locked;
-        rbPlayer = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        float verticalInput = Input.GetAxis("Vertical");
-        float horizontalInput = Input.GetAxis("Horizontal");
+        input.x = Input.GetAxis("Horizontal");
+        input.y = Input.GetAxis("Vertical");
 
-        Move(verticalInput, horizontalInput);
-        MouseController();
-        Jump();
-    }
-
-    private void MouseController() {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
-        yRotation -= mouseX;
-        yRotation = Mathf.Clamp(-90f, yRotation, 90f);
-        transform.localRotation = Quaternion.Euler(0, -yRotation, 0f);
-        playerBody.Rotate(Vector3.right * mouseY);
-    }
-
-    private void Jump() {
-        if (Input.GetKeyDown(KeyCode.Space) && isOnGround) {
-            rbPlayer.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        }
+        animator.SetFloat("InputX", input.x);
+        animator.SetFloat("InputY", input.y);
     }
 }
