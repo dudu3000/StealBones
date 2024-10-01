@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class PlayerController : CharacterController
+public class PlayerController : BaseCharacterController
 {
-    private Vector2 input;
     private float speed = 3.5f;
     // Start is called before the first frame update
     void Start()
