@@ -288,6 +288,50 @@ ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 19832170, guid: 37a14e1121b33c641b1361344a4a856a, type: 3}
   m_PrefabInstance: {fileID: 1547358925}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &84161370
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 84161372}
+  - component: {fileID: 84161371}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &84161371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 84161370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dc2c9f365664e54688f305ebcc3390b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &84161372
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 84161370}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &100696339
 GameObject:
   m_ObjectHideFlags: 0
@@ -718,6 +762,10 @@ PrefabInstance:
       propertyPath: aimLookAt
       value: 
       objectReference: {fileID: 1919343086}
+    - target: {fileID: 6802361248053511193, guid: 6bea852d210fec847a2ed31c9b35238a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.156
+      objectReference: {fileID: 0}
     - target: {fileID: 6804850715752608503, guid: 6bea852d210fec847a2ed31c9b35238a, type: 3}
       propertyPath: m_Data.m_SourceObjects.m_Item0.transform
       value: 
@@ -746,6 +794,10 @@ PrefabInstance:
       propertyPath: weaponPose
       value: 
       objectReference: {fileID: 1467903821}
+    - target: {fileID: 8586288750841571855, guid: 6bea852d210fec847a2ed31c9b35238a, type: 3}
+      propertyPath: destroyEffect
+      value: 
+      objectReference: {fileID: 5482281041856669775, guid: 70fceac3e15d35d4ca3c07e2ba4992c8, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -838,7 +890,7 @@ Transform:
   m_GameObject: {fileID: 759806653}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.021, y: 0.052, z: 1.056}
+  m_LocalPosition: {x: 0.021, y: 0.052, z: 1.156}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2513,6 +2565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a2b6854ade4d6d4095573bef64f44d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 100
 --- !u!136 &1748185569
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3141,3 +3194,4 @@ SceneRoots:
   - {fileID: 1483219684}
   - {fileID: 241725365}
   - {fileID: 583730713}
+  - {fileID: 84161372}

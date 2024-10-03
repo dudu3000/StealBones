@@ -15,12 +15,12 @@ public class WeaponPlayerController : BaseWeaponController
 
     void Update()
     {
-        bulletSpawner.transform.LookAt(aimLookAt.transform);
-        if (isFiring && reloading > reloadTime) {
-            Firing(aimLookAt, bulletSpawner);
-            reloading = 0f;
-        } else {
-            reloading += Time.deltaTime;
+            bulletSpawner.transform.LookAt(aimLookAt.transform);
+            if (isFiring && reloading > reloadTime) {
+                Firing(aimLookAt, bulletSpawner);
+                reloading = 0f;
+            } else {
+                reloading += Time.deltaTime;
+            }
         }
     }
-}
