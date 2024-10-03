@@ -242,6 +242,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 511ef8b8eacb0bf4884b54aa2ac3f67c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spine1: {fileID: 6411718791699346671}
+  spine2: {fileID: 2819529967144652099}
+  head: {fileID: 7494380774702534268}
+  weaponPose: {fileID: 998541042269182598}
 --- !u!114 &5240624649874081441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,6 +259,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turnSpeed: 15
+  playerInRange: 0
 --- !u!54 &5943910645459108655
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1165,6 +1170,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6627283717971174738}
   - component: {fileID: 6818101804745726078}
+  - component: {fileID: 885584487871611460}
+  - component: {fileID: 7607397355491482327}
   m_Layer: 0
   m_Name: CharacterModel
   m_TagString: Untagged
@@ -1289,6 +1296,40 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.64266205, y: 86.04969, z: -1.49366}
     m_Extent: {x: 103.79328, y: 96.38174, z: 23.182886}
   m_DirtyAABB: 0
+--- !u!135 &885584487871611460
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530665755693956009}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1500
+  m_Center: {x: -0.64266205, y: 86.04969, z: -1.4936599}
+--- !u!114 &7607397355491482327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530665755693956009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b532cc08b416185419e446dcf7cdde91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInRange: 0
 --- !u!1 &1609745032423337759
 GameObject:
   m_ObjectHideFlags: 0
@@ -2815,6 +2856,7 @@ MonoBehaviour:
   bullet: {fileID: 5657331077786612062, guid: a3c87ed59fc9af748b7af5f1a80b6de3, type: 3}
   aimLookAt: {fileID: 0}
   bulletSpawner: {fileID: 2036176332005619435}
+  playerInRange: 0
 --- !u!1 &4313948207806387625
 GameObject:
   m_ObjectHideFlags: 0
