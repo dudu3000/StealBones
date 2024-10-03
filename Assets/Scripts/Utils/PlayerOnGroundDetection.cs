@@ -13,12 +13,6 @@ public class PlayerOnGroundDetection : MonoBehaviour
         playerAnimator = player.GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter(Collider other) {
         if (!other.CompareTag("Player")) {
             playerAnimator.SetBool("Jump", false);

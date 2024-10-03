@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyCharacterAiming : BaseCharacterAiming
 {
+    public bool playerInRange = false;
+    
     private WeaponEnemyController weapon;
     private GameObject player;
 
@@ -18,13 +20,15 @@ public class EnemyCharacterAiming : BaseCharacterAiming
     }
 
     protected void LateUpdate() {
-        if (Input.GetKey(KeyCode.Mouse0)) {
+        if (playerInRange) {
             weapon.StartFiring();
         } else {
             weapon.StopFiring();
         }
     }
     protected override void FixedUpdate() {
-        transform.LookAt(new Vector3(player.transform.position.x, 0, player.transform.position.z));
+        if (playerInRange) {
+            transform.LookAt(new Vector3(player.transform.position.x, 0, player.transform.position.z));
+        }
     }
 }
