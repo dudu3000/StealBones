@@ -7,17 +7,6 @@ public class BaseCharacterController : CharacterControllerAbstract
     protected Animator animator;
     protected Rigidbody playerRb;
     protected Vector2 input;
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     protected override void Move(Vector2 input)
     {

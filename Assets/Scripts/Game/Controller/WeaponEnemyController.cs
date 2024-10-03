@@ -6,6 +6,7 @@ public class WeaponEnemyController : BaseWeaponController
 {
     public GameObject aimLookAt;
     public GameObject bulletSpawner;
+    public bool playerInRange = false;
     void Start()
     {
         isFiring = false;
@@ -15,12 +16,14 @@ public class WeaponEnemyController : BaseWeaponController
     
     void Update()
     {
-        bulletSpawner.transform.LookAt(aimLookAt.transform);
-        if (isFiring && reloading > reloadTime) {
-            Firing(aimLookAt, bulletSpawner);
-            reloading = 0f;
-        } else {
-            reloading += Time.deltaTime;
+        if (playerInRange) {
+            bulletSpawner.transform.LookAt(aimLookAt.transform);
+            if (isFiring && reloading > reloadTime) {
+                Firing(aimLookAt, bulletSpawner);
+                reloading = 0f;
+            } else {
+                reloading += Time.deltaTime;
+            }
         }
     }
 }
