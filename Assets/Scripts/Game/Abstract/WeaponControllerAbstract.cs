@@ -21,5 +21,5 @@ public abstract class WeaponControllerAbstract : MonoBehaviour
     }
     public abstract void StartFiring();
     public abstract void StopFiring();
-    public abstract void Firing();
+    public abstract void Firing(GameObject aimLookAt, GameObject bulletSpawner);
 }
