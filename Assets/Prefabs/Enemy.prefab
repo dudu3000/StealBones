@@ -219,7 +219,7 @@ Animator:
   m_GameObject: {fileID: 356152977545069019}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 409520c9226982345a49c9803624f208, type: 3}
-  m_Controller: {fileID: 9100000, guid: 7a9f599c49797434485c0e1d9e99f200, type: 2}
+  m_Controller: {fileID: 9100000, guid: bc482b8245813934ea9ea5d4c032c124, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -246,6 +246,9 @@ MonoBehaviour:
   spine2: {fileID: 2819529967144652099}
   head: {fileID: 7494380774702534268}
   weaponPose: {fileID: 998541042269182598}
+  health: 100
+  destroyEffect: {fileID: 5482281041856669775, guid: 70fceac3e15d35d4ca3c07e2ba4992c8, type: 3}
+  initialRunInSeconds: 2
 --- !u!114 &5240624649874081441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1172,6 +1175,8 @@ GameObject:
   - component: {fileID: 6818101804745726078}
   - component: {fileID: 885584487871611460}
   - component: {fileID: 7607397355491482327}
+  - component: {fileID: 8245945117378139290}
+  - component: {fileID: 4244606030234855646}
   m_Layer: 0
   m_Name: CharacterModel
   m_TagString: Untagged
@@ -1318,6 +1323,40 @@ SphereCollider:
   m_Radius: 1500
   m_Center: {x: -0.64266205, y: 86.04969, z: -1.4936599}
 --- !u!114 &7607397355491482327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530665755693956009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b532cc08b416185419e446dcf7cdde91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInRange: 0
+--- !u!135 &8245945117378139290
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530665755693956009}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 2000
+  m_Center: {x: -0.64266205, y: 86.04969, z: -1.4936599}
+--- !u!114 &4244606030234855646
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1653,7 +1692,7 @@ Transform:
   m_GameObject: {fileID: 2036176332005619435}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.021, y: 0.052, z: 1.056}
+  m_LocalPosition: {x: 0.021, y: 0.052, z: 1.156}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

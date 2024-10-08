@@ -38,7 +38,7 @@ public class PlayerController : BaseCharacterController
 
     private void OnCollisionEnter(Collision other) {
         if (other.gameObject.CompareTag("Bullet")) {
-            health -= 25f;
+            health -= 12f;
 
             if (health <= 0) {
                 GameManager.gameRunning = false;

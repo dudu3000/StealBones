@@ -11,11 +11,15 @@ public class EnemyController : BaseCharacterController
     public GameObject weaponPose;
     public float health = 100f;
     public ParticleSystem destroyEffect;
+    public float initialRunInSeconds;
 
+    private float zRunning = 1;
     private float speed = 3.5f;
     private PlayerInRange playerDetection;
     private WeaponEnemyController weaponController;
     private EnemyCharacterAiming aimingController;
+    private float runingTimePassed = 0f;
+    private bool isRunning = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,7 +37,14 @@ public class EnemyController : BaseCharacterController
     // Update is called once per frame
     void Update()
     {
-        if (playerDetection.playerInRange) {
+        runingTimePassed += Time.deltaTime;
+        if (runingTimePassed < initialRunInSeconds) {
+            Move(new Vector2(0, zRunning));
+        } else {
+            Move(new Vector2(0, 0));
+            isRunning = false;
+        }
+        if (playerDetection.playerInRange && !isRunning) {
             weaponController.playerInRange = true;
             aimingController.playerInRange = true;
             spine1.GetComponent<MultiAimConstraint>().weight = 1;
@@ -50,15 +61,20 @@ public class EnemyController : BaseCharacterController
         }
     }
 
+    private void Run() {
+
+    }
+
     private void OnCollisionEnter(Collision other) {
         if (other.gameObject.CompareTag("Bullet")) {
-            health -= 25f;
+            health -= 12f;
 
             if (health <= 0) {
                 ParticleSystem destroyEffectApplied = Instantiate(destroyEffect, other.gameObject.transform.position, transform.rotation);
                 destroyEffectApplied.Play();
 
                 Destroy(gameObject);
+                Destroy(destroyEffectApplied.gameObject, 1f);
             }
         }
     }
