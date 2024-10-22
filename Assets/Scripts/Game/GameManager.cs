@@ -162,7 +162,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void LoadMainMenu() {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(0);
     }
 
     public void QuitGame() {
@@ -174,8 +174,8 @@ public class GameManager : MonoBehaviour
     }
 
     public void RestartGame() {
-        SceneManager.LoadScene(1);
         SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
         GameManager.Instance.gamePaused = false;
     }
 }
