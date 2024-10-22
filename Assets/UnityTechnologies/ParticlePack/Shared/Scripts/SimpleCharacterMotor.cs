@@ -56,21 +56,23 @@ public class SimpleCharacterMotor : MonoBehaviour
 
     void UpdateTranslation()
     {
-        if (controller.isGrounded)
-        {
-            var x = Input.GetAxis("Horizontal");
-            var z = Input.GetAxis("Vertical");
-            var run = Input.GetKey(KeyCode.LeftShift);
-
-            var translation = new Vector3(x, 0, z);
-            speed = run ? runSpeed : walkSpeed;
-            movement = transform.TransformDirection(translation * speed);
+        if (GameManager.Instance.gamePaused) {
+            if (controller.isGrounded)
+            {
+                var x = Input.GetAxis("Horizontal");
+                var z = Input.GetAxis("Vertical");
+                var run = Input.GetKey(KeyCode.LeftShift);
+    
+                var translation = new Vector3(x, 0, z);
+                speed = run ? runSpeed : walkSpeed;
+                movement = transform.TransformDirection(translation * speed);
+            }
+            else
+            {
+                movement.y -= gravity * Time.deltaTime;
+            }
+            finalMovement = Vector3.Lerp(finalMovement, movement, Time.deltaTime * movementAcceleration);
+            controller.Move(finalMovement * Time.deltaTime);
         }
-        else
-        {
-            movement.y -= gravity * Time.deltaTime;
-        }
-        finalMovement = Vector3.Lerp(finalMovement, movement, Time.deltaTime * movementAcceleration);
-        controller.Move(finalMovement * Time.deltaTime);
     }
 }

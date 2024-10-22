@@ -16,10 +16,12 @@ public class PlayerCharacterAiming : BaseCharacterAiming
     }
 
     protected void LateUpdate() {
-        if (Input.GetKey(KeyCode.Mouse0)) {
-            weapon.StartFiring();
-        } else {
-            weapon.StopFiring();
+        if (!GameManager.Instance.gamePaused) {
+            if (Input.GetKey(KeyCode.Mouse0)) {
+                weapon.StartFiring();
+            } else {
+                weapon.StopFiring();
+            }
         }
     }
 }

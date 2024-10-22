@@ -22,7 +22,9 @@ public class ChestController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Opening();
+        if (!GameManager.Instance.gamePaused) {
+            Opening();
+        }
     }
 
     private void Opening() {
@@ -45,6 +47,7 @@ public class ChestController : MonoBehaviour
             isOpened = true;
             ParticleSystem openedEffectInstantiated = Instantiate(openedEffect, transform.position, new Quaternion());
             openedEffectInstantiated.Play();
+            GameManager.Instance.AddCollectedChest();
         }
     }
 
