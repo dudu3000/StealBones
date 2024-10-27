@@ -20,6 +20,7 @@ public class EnemyController : BaseCharacterController
     private WeaponEnemyController weaponController;
     private EnemyCharacterAiming aimingController;
     private float runingTimePassed = 0f;
+    
     // Start is called before the first frame update
     void Start()
     {

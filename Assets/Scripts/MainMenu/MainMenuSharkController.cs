@@ -6,6 +6,7 @@ public class MainMenuSharkController : MonoBehaviour
 {
     private float speed = 5f;
     private Vector3 initialPosition = new Vector3(-4, -0.5f, -4.8f);
+    
     // Start is called before the first frame update
     void Start()
     {

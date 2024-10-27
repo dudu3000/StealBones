@@ -14,6 +14,7 @@ public class ChestController : MonoBehaviour
     private float maxOpeningAngle = -90;
     private bool isOpening = false;
     private bool isOpened = false;
+    
     // Start is called before the first frame update
     void Start()
     {

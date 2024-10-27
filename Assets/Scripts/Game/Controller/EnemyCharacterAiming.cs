@@ -28,7 +28,7 @@ public class EnemyCharacterAiming : BaseCharacterAiming
     }
     protected override void FixedUpdate() {
         if (!GameManager.Instance.gamePaused) {
-            if (playerInRange) {
+            if (playerInRange && GameObject.Find("Player") != null) {
                 transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
             }
         }

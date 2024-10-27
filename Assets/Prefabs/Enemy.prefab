@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 1349548631228837783}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -248,7 +248,7 @@ MonoBehaviour:
   weaponPose: {fileID: 998541042269182598}
   health: 100
   destroyEffect: {fileID: 5482281041856669775, guid: 70fceac3e15d35d4ca3c07e2ba4992c8, type: 3}
-  initialRunInSeconds: 2
+  initialRunInSeconds: 20
   isPatrolling: 0
 --- !u!114 &5240624649874081441
 MonoBehaviour:
@@ -290,7 +290,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!136 &8963103603588072862
 CapsuleCollider:
   m_ObjectHideFlags: 0

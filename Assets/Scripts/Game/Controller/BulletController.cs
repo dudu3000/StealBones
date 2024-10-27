@@ -30,10 +30,9 @@ public class BulletController : MonoBehaviour
         ParticleSystem particles = Instantiate(effect, transform.position, transform.rotation);
         particles.Play();
 
-        // Wait until the audio has finished playing
         while (bulletAS.isPlaying)
         {
-            yield return null;  // Wait for the next frame
+            yield return null;
         }
 
         DestroyBullet(particles);

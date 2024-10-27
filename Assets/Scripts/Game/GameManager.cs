@@ -10,7 +10,9 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static bool gameRunning = true;
+    public static bool gameFinished = false;
     public static bool mainMenu = true;
+    public static float gameTime = 0f;
     public bool gamePaused = false;
     public GameObject oceanTile;
     public AudioClip[] backgroundSounds;
@@ -20,6 +22,10 @@ public class GameManager : MonoBehaviour
     public int noOfChests = 4;
     public int chestsCollected = 0;
     public float timeWhenGameStarted = 0f;
+    public int currentRunTimeInSeconds = 0;
+    public int bestTimeInSeconds = 0;
+    public int bestTimeReadInSeconds = 0;
+    public string bestTimeRead = "00:00";
 
     private float oceanTileSize = 30f;
     private float mapSize = 3000f;
@@ -29,18 +35,14 @@ public class GameManager : MonoBehaviour
     private int numberOfBackgroundSounds = 0;
     private float menuDelay = 1f;
     private float menuTimePassed = 0f;
+    private bool oceanSpawned = false;
+    
     // Start is called before the first frame update
     void Start()
     {
         gameAudioSource = GetComponent<AudioSource>();
-        numberOfBackgroundSounds = backgroundSounds.Length;
-
-        float halfMapSize = mapSize / 2;
-        for (float i = -halfMapSize; i < halfMapSize; i+=oceanTileSize) {
-            for (float j = -halfMapSize; j < halfMapSize; j+=oceanTileSize) {
-                Instantiate(oceanTile, new Vector3(i, 0, j), Quaternion.identity);
-            }
-        }
+        Instance.bestTimeReadInSeconds = ConvertToSeconds(ReadHighestScore().bestTime);
+        Instance.bestTimeRead = ReadHighestScore().bestTime;
     }
 
     private void Awake() {
@@ -56,14 +58,18 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(Instance.gamePaused);
-        if (!gameRunning) {
-            Debug.Log("GAME OVER");
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            Time.timeScale = 0f;
-        }
+        GameLost();
+        GameCompleted();
+        UpdateStatsRealTime();
+        GameMenuControl();
+        SpawnOcean();
+        RandomBackgroundSoundsController();
 
+        gameTime += Time.deltaTime;
+
+    }
+
+    private void RandomBackgroundSoundsController() {
         timeCounter += Time.deltaTime;
 
         if (timeCounter > backgroundSoundsTime) {
@@ -72,13 +78,69 @@ public class GameManager : MonoBehaviour
             int indexOfClipToPlay = UnityEngine.Random.Range(0, numberOfBackgroundSounds);
             gameAudioSource.PlayOneShot(backgroundSounds[indexOfClipToPlay]);
         }
-        
-        UpdateStatsRealTime();
-        GameMenuControl();
+    }
+
+    private void SpawnOcean() {
+        if (SceneManager.GetActiveScene().name == "Game" && !oceanSpawned) {
+            numberOfBackgroundSounds = backgroundSounds.Length;
+
+            float halfMapSize = mapSize / 2;
+            for (float i = -halfMapSize; i < halfMapSize; i+=oceanTileSize) {
+                for (float j = -halfMapSize; j < halfMapSize; j+=oceanTileSize) {
+                    Instantiate(oceanTile, new Vector3(i, 0, j), Quaternion.identity);
+                }
+            }
+            oceanSpawned = true;
+        }
+    }
+
+    private void GameCompleted () {
+        if (Instance.chestsCollected == Instance.noOfChests) {
+            Instance.bestTime = GetTimeFormatted();
+            SaveData data = ReadHighestScore();
+
+            int currentRunTime = ConvertToSeconds(GetTimeFormatted());
+            currentRunTimeInSeconds = currentRunTime;
+            int bestRunTime = ConvertToSeconds(data.bestTime);
+            bestTimeInSeconds = bestRunTime;
+
+            if (currentRunTime < bestRunTime) {
+                SaveHighestScore();
+            }
+
+            gameRunning = false;
+            gameFinished = true;
+        }
+    }    
+    
+    public static int ConvertToSeconds(string timeString) {
+        string[] timeParts = timeString.Split(':');
+        int minutes = int.Parse(timeParts[0]);
+        int seconds = int.Parse(timeParts[1]);
+        int totalSeconds = (minutes * 60) + seconds;
+
+        return totalSeconds;
+    }
+
+    private void GameLost() {
+        if (!gameRunning) {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 
     private void GameMenuControl() {
         if (SceneManager.GetActiveScene().name == "Game") {
+            if (GameObject.Find("Player") == null) {
+                if (!gameRunning) {
+                    menuTimePassed = 0f;
+                    Instance.gamePaused = true;
+                    Cursor.lockState = CursorLockMode.None;
+                    Cursor.visible = true;
+                    return;
+                }
+            }
+
             menuTimePassed += Time.deltaTime;
             if (Input.GetKey(KeyCode.Escape) && menuTimePassed > menuDelay && !Instance.gamePaused) {
                 menuTimePassed = 0f;
@@ -110,7 +172,7 @@ public class GameManager : MonoBehaviour
         GameObject nameDisplay = GameObject.Find("Name");
         GameObject timeDisplay = GameObject.Find("Time");
         GameObject scoreDisplay = GameObject.Find("Score");
-        if (nameDisplay != null) {
+        if (nameDisplay != null && GameObject.Find("Player") != null) {
             nameDisplay.GetComponent<TextMeshProUGUI>().text = $"{playerName} - HP: {GameObject.Find("Player").GetComponent<PlayerController>().health}/100";
             timeDisplay.GetComponent<TextMeshProUGUI>().text = GetTimeFormatted();
             scoreDisplay.GetComponent<TextMeshProUGUI>().text = $"Chests: {GameManager.Instance.chestsCollected}/{GameManager.Instance.noOfChests}";
@@ -118,7 +180,7 @@ public class GameManager : MonoBehaviour
     }
 
     public string GetTimeFormatted() {
-        float timeSinceStart = Time.time - timeWhenGameStarted;
+        float timeSinceStart = gameTime - timeWhenGameStarted;
 
         int minutes = Mathf.FloorToInt(timeSinceStart / 60);
         int seconds = Mathf.FloorToInt(timeSinceStart % 60);
@@ -138,6 +200,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadHighestScore() {
         string path = Application.persistentDataPath + "/savedata.json";
+
         if (File.Exists(path)) {
             string json = File.ReadAllText(path);
 
@@ -149,6 +212,21 @@ public class GameManager : MonoBehaviour
             bestTime = "00:00";
             playerName = "Jhon Doe";
         }
+    }
+
+    public SaveData ReadHighestScore() {
+        string path = Application.persistentDataPath + "/savedata.json";
+
+        if (File.Exists(path)) {
+            string json = File.ReadAllText(path);
+
+            return JsonUtility.FromJson<SaveData>(json);
+        }
+        SaveData data = new SaveData();
+        data.playerName = "Jhon Doe";
+        data.bestTime = "00:00";
+
+        return data;
     }
 
     public void SaveHighestScore() {
@@ -174,8 +252,14 @@ public class GameManager : MonoBehaviour
     }
 
     public void RestartGame() {
-        SceneManager.LoadScene(0);
+        Instance.timeWhenGameStarted = 0;
+        gameTime = 0f;
         SceneManager.LoadScene(1);
-        GameManager.Instance.gamePaused = false;
+        LoadHighestScore();
+        Instance.bestTimeReadInSeconds = ConvertToSeconds(ReadHighestScore().bestTime);
+        Instance.bestTimeRead = ReadHighestScore().bestTime;
+        Instance.chestsCollected = 0;
+        Instance.gamePaused = false;
+        gameFinished = false;
     }
 }

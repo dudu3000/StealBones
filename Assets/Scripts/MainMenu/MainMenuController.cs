@@ -22,10 +22,8 @@ public class MainMenuController : MonoBehaviour
     }
 
     public void StartGame() {
+        GameManager.Instance.RestartGame();
         GameManager.Instance.playerName = GameObject.Find("NameField").GetComponent<TextMeshProUGUI>().text.ToString();
-        GameManager.Instance.bestTime = "00:00";
-        GameManager.Instance.timeWhenGameStarted = Time.time;
-        SceneManager.LoadScene("Game");
     }
     public void ExitGame() {
         #if UNITY_EDITOR
