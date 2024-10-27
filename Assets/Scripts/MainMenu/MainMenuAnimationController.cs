@@ -5,6 +5,7 @@ using UnityEngine;
 public class MainMenuAnimationController : MonoBehaviour
 {
     private Animator characterAnimator;
+    
     // Start is called before the first frame update
     void Start()
     {

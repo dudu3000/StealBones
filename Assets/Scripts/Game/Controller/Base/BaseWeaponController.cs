@@ -7,6 +7,7 @@ public class BaseWeaponController : WeaponControllerAbstract
     public ParticleSystem gunSmoke;
     public GameObject bullet;
     protected int numberOfBullets = 8;
+    public AudioSource gunAS;
     protected List<Vector3> bulletSpawnPositionsOffset = new List<Vector3> {
             new Vector3(0, 0.02f, 0),
             new Vector3(0, -0.02f, 0),
@@ -39,6 +40,7 @@ public class BaseWeaponController : WeaponControllerAbstract
 
     public override void Firing(GameObject aimLookAt, GameObject bulletSpawner) {
         gunSmoke.Play();
+        gunAS.PlayOneShot(gunAS.clip);
         isFiring = false;
         SpawnBullets(aimLookAt, bulletSpawner);
     }
@@ -46,7 +48,7 @@ public class BaseWeaponController : WeaponControllerAbstract
     protected void SpawnBullets(GameObject aimLookAt, GameObject bulletSpawner) {
         for (int i = 0; i < numberOfBullets; i++) {
             GameObject bulletSpawned = Instantiate(bullet, bulletSpawner.transform.position + bulletSpawnPositionsOffset[i], Quaternion.identity);
-            bulletSpawned.GetComponent<Rigidbody>().AddForce(aimLookAt.transform.position - bulletSpawned.transform.position + bulletDirectionOffset[i], ForceMode.Impulse);
+            bulletSpawned.GetComponent<Rigidbody>().AddForce((aimLookAt.transform.position - bulletSpawned.transform.position + bulletDirectionOffset[i])*5, ForceMode.Impulse);
         }
     }
 }

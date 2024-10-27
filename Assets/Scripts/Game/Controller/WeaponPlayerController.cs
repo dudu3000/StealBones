@@ -15,6 +15,7 @@ public class WeaponPlayerController : BaseWeaponController
 
     void Update()
     {
+        if (!GameManager.Instance.gamePaused) {
             bulletSpawner.transform.LookAt(aimLookAt.transform);
             if (isFiring && reloading > reloadTime) {
                 Firing(aimLookAt, bulletSpawner);
@@ -24,3 +25,4 @@ public class WeaponPlayerController : BaseWeaponController
             }
         }
     }
+}

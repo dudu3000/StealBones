@@ -16,14 +16,19 @@ public class WeaponEnemyController : BaseWeaponController
     
     void Update()
     {
-        if (playerInRange) {
-            bulletSpawner.transform.LookAt(aimLookAt.transform);
-            if (isFiring && reloading > reloadTime) {
-                Firing(aimLookAt, bulletSpawner);
-                reloading = 0f;
-            } else {
-                reloading += Time.deltaTime;
+        if (!GameManager.Instance.gamePaused) {
+            if (playerInRange) {
+                bulletSpawner.transform.LookAt(aimLookAt.transform);
             }
+        }
+    }
+
+    private void LateUpdate() {
+        if (isFiring && reloading > reloadTime) {
+            Firing(aimLookAt, bulletSpawner);
+            reloading = 0f;
+        } else {
+            reloading += Time.deltaTime;
         }
     }
 }
