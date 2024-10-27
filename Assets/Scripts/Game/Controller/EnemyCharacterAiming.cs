@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// INHERITANCE
 public class EnemyCharacterAiming : BaseCharacterAiming
 {
     public bool playerInRange = false;
@@ -26,6 +27,7 @@ public class EnemyCharacterAiming : BaseCharacterAiming
             }
         }
     }
+    // POLYMORPHISM
     protected override void FixedUpdate() {
         if (!GameManager.Instance.gamePaused) {
             if (playerInRange && GameObject.Find("Player") != null) {

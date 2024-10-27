@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+// INHERITANCE
 public class BaseWeaponController : WeaponControllerAbstract
 {
     public ParticleSystem gunSmoke;
@@ -29,15 +29,18 @@ public class BaseWeaponController : WeaponControllerAbstract
             new Vector3(-0.04f, 0, 0)
     };
 
+    // POLYMORPHISM
     public override void StartFiring() {
         isFiring = true;
     }
 
+    // POLYMORPHISM
     public override void StopFiring()
     {
         isFiring = false;
     }
 
+    // POLYMORPHISM
     public override void Firing(GameObject aimLookAt, GameObject bulletSpawner) {
         gunSmoke.Play();
         gunAS.PlayOneShot(gunAS.clip);

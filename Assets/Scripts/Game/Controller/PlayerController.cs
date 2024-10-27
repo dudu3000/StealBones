@@ -4,6 +4,7 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 
+// INHERITANCE
 public class PlayerController : BaseCharacterController
 {
     public float health = 100f;
@@ -70,6 +71,7 @@ public class PlayerController : BaseCharacterController
         }
     }
 
+    // POLYMORPHISM
     protected override void Jump() {
         playerRb.AddForce(Vector3.up * 500, ForceMode.Impulse);
         animator.SetBool("Jump", true);
