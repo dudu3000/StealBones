@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
+// INHERITANCE
 public class EnemyController : BaseCharacterController
 {
     public GameObject spine1;
